@@ -13,6 +13,8 @@
     var pieces = [];
     var width = 0;
     var height = 0;
+    var originX = 0;
+    var originY = 0;
     var running = false;
     var startedAt = 0;
 
@@ -28,6 +30,12 @@
         canvas.width = Math.round(width * ratio);
         canvas.height = Math.round(height * ratio);
         ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+        // Anchor the burst to the screenshot itself, not to the canvas: the
+        // canvas is larger by the bleed, which varies with screen width.
+        var shot = canvas.parentNode.getBoundingClientRect();
+        originX = (shot.left - rect.left) + shot.width * 0.5;
+        originY = (shot.top - rect.top) + shot.height * 0.35;
     }
 
     function rand(min, max) {
@@ -60,7 +68,7 @@
         pieces = [];
         // One pop in the middle of the screenshot, thrown in every direction,
         // so the confetti stays a single bunch centred on it.
-        fire(width * 0.5, height * 0.52, -Math.PI / 2, 170, Math.PI);
+        fire(originX, originY, -Math.PI / 2, 170, Math.PI);
     }
 
     function draw(now) {
