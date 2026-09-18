@@ -38,7 +38,7 @@
     function fire(x, y, angle, count, cone) {
         for (var i = 0; i < count; i++) {
             var spread = rand(-cone, cone);
-            var speed = rand(6, 14);
+            var speed = rand(1.5, 8.5);
             var direction = angle + spread;
 
             pieces.push({
@@ -58,9 +58,10 @@
 
     function burst() {
         pieces = [];
-        // A single popper, fired straight up from the middle of the hero, so
-        // the confetti reads as one burst centred on the headline.
-        fire(width * 0.5, height * 1.02, -Math.PI / 2, 170, 0.3);
+        // One pop in the middle of the hero, thrown in every direction, so the
+        // confetti stays a single bunch centred on the headline instead of a
+        // fountain that leaves the frame in a second.
+        fire(width * 0.5, height * 0.52, -Math.PI / 2, 170, Math.PI);
     }
 
     function draw(now) {
@@ -74,7 +75,7 @@
         for (var i = 0; i < pieces.length; i++) {
             var p = pieces[i];
 
-            p.vy += 0.26;          // gravity
+            p.vy += 0.17;          // gravity
             p.vx *= 0.992;         // drag
             p.vy *= 0.992;
             p.x += p.vx;
@@ -107,7 +108,7 @@
         for (var step = 0; step < 34; step++) {
             for (var i = 0; i < pieces.length; i++) {
                 var p = pieces[i];
-                p.vy += 0.26;
+                p.vy += 0.17;
                 p.x += p.vx;
                 p.y += p.vy;
                 p.vx *= 0.992;
