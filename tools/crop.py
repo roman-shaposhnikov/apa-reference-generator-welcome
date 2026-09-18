@@ -4,11 +4,13 @@ SRC = '..'
 OUT = '../img'
 FAVICON = 'site-favicon.png'
 FONT = '/usr/share/fonts/truetype/ubuntu/Ubuntu-R.ttf'
+FONT_BOLD = '/usr/share/fonts/truetype/ubuntu/Ubuntu-B.ttf'
 
-# The captures carry a 1px dark window border along the top and left edges;
-# start one pixel in so it does not show up as a black line on the page.
-POPUP_BOX = (1, 1, 1118, 400)   # down to below the extensions dropdown
-BAR_BOX = (1, 1, 1118, 240)     # just the browser frame; no empty page below
+# The captures are framed by the window's own dark border - along the top and
+# left edges, and down the right edge beside the chrome. Crop inside it so it
+# does not read as a black line drawn around the screenshot.
+POPUP_BOX = (6, 6, 1112, 400)   # down to below the extensions dropdown
+BAR_BOX = (6, 6, 1112, 240)     # just the browser frame; no empty page below
 
 # --- step 1: paint out page content showing through / around the dropdown ----
 CARD_FILL = (860, 160)
@@ -87,8 +89,9 @@ def dress_browser(im, theme):
         icon, side = fit_favicon(box)
         im.paste(icon, centred(box, side), icon)
 
-    tab_font = ImageFont.truetype(FONT, 15)
-    url_font = ImageFont.truetype(FONT, 16)
+    tab_font = ImageFont.truetype(FONT_BOLD, 15)
+    host_font = ImageFont.truetype(FONT_BOLD, 17)
+    path_font = ImageFont.truetype(FONT, 17)
 
     # Tab title, truncated the way Chrome would if it overflows.
     title, limit = TITLE, TAB_TITLE[2] - TAB_TITLE[0] - 6
@@ -100,9 +103,9 @@ def dress_browser(im, theme):
 
     # URL with the host emphasised, as Chrome renders it.
     x = OMNI_TEXT[0] + 3
-    draw.text((x, 80), URL_HOST, font=url_font, fill=INK[theme], anchor='lm')
-    x += draw.textlength(URL_HOST, font=url_font)
-    draw.text((x, 80), URL_PATH, font=url_font, fill=MUTED[theme], anchor='lm')
+    draw.text((x, 80), URL_HOST, font=host_font, fill=INK[theme], anchor='lm')
+    x += draw.textlength(URL_HOST, font=host_font)
+    draw.text((x, 80), URL_PATH, font=path_font, fill=MUTED[theme], anchor='lm')
 
     return im
 
@@ -116,8 +119,15 @@ def build(name, src, box, masks=(), dress=None):
     if dress:
         im = dress_browser(im, dress)
 
-    im.crop(box).save(f'{OUT}/{name}.png')
-    print(f'{name}.png  {box[2]-box[0]}x{box[3]-box[1]}')
+    out = im.crop(box)
+    w, h = out.size
+
+    # The window border is a hairline much darker than whatever sits just
+    # inside it. Comparing against a neighbour a few pixels in catches it in
+    # either theme, where a plain brightness threshold cannot: the light
+    # border and legitimate dark-theme chrome are nearly the same brightness.
+    out.save(f'{OUT}/{name}.png')
+    print(f'{name}.png  {w}x{h}')
 
 
 build('step1-light', 'light_popup_small.png', POPUP_BOX, POPUP_MASK)

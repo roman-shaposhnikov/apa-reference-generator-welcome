@@ -228,16 +228,16 @@ b {
 .ann__arrow {
     position: absolute;
     z-index: 2;
-    width: 5.6cqw;
-    height: 3.9cqw;
+    width: 8cqw;
+    height: 5cqw;
     overflow: visible;
     pointer-events: none;
     color: var(--arrow);
 }
 
 .ann__arrow--long {
-    width: 7cqw;
-    height: 4.8cqw;
+    width: 9.5cqw;
+    height: 5.9cqw;
 }
 
 /* Disc on the left, arrow pointing right at the target. */
@@ -246,8 +246,8 @@ b {
 }
 
 .ann--left .ann__arrow {
-    right: 1.6cqw;
-    top: -1.24cqw;
+    right: 2.2cqw;
+    top: -0.875cqw;
 }
 
 /* Disc on the right, arrow pointing left at the target.
@@ -257,15 +257,15 @@ b {
 }
 
 .ann--right .ann__arrow {
-    left: 1.6cqw;
-    top: -1.53cqw;
+    left: 2.2cqw;
+    top: -1.03cqw;
     transform: scaleX(-1);
 }
 
 .ann__line {
     fill: none;
     stroke: currentColor;
-    stroke-width: 5;
+    stroke-width: 2.6;
     stroke-linecap: round;
 }
 
