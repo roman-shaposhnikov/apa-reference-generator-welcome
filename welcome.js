@@ -1,4 +1,4 @@
-// Confetti popper for the hero. Vanilla canvas, no libraries.
+// Confetti popper over the first screenshot. Vanilla canvas, no libraries.
 // The page renders fine without this script - the canvas simply stays empty.
 
 (function () {
@@ -58,9 +58,8 @@
 
     function burst() {
         pieces = [];
-        // One pop in the middle of the hero, thrown in every direction, so the
-        // confetti stays a single bunch centred on the headline instead of a
-        // fountain that leaves the frame in a second.
+        // One pop in the middle of the screenshot, thrown in every direction,
+        // so the confetti stays a single bunch centred on it.
         fire(width * 0.5, height * 0.52, -Math.PI / 2, 170, Math.PI);
     }
 
@@ -151,9 +150,26 @@
         if (!running) resize();
     });
 
+    // Fire when the screenshot is actually on screen - on a phone it sits well
+    // below the fold, and a burst that plays unseen is a burst wasted.
+    function arm() {
+        if (!('IntersectionObserver' in window)) {
+            start();
+            return;
+        }
+
+        var observer = new IntersectionObserver(function (entries) {
+            if (!entries[0].isIntersecting) return;
+            observer.disconnect();
+            start();
+        }, { threshold: 0.4 });
+
+        observer.observe(canvas.parentNode);
+    }
+
     if (document.readyState === 'complete') {
-        start();
+        arm();
     } else {
-        window.addEventListener('load', start);
+        window.addEventListener('load', arm);
     }
 })();

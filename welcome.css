@@ -14,6 +14,8 @@
     --border: light-dark(#dde3e5, #2a3b44);
     --shadow-xl: 0 24px 48px -12px light-dark(rgba(13, 114, 147, 0.22), rgba(0, 0, 0, 0.6));
     --shell: 888px;
+    /* how far the confetti may fly past the screenshot */
+    --bleed: 70px;
 }
 
 * {
@@ -22,7 +24,14 @@
     box-sizing: border-box;
 }
 
+html {
+    /* the confetti canvas reaches past the screenshot; clip it rather than
+       letting it push out a horizontal scrollbar */
+    overflow-x: clip;
+}
+
 body {
+    overflow-x: clip;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     background: var(--background);
     color: var(--text-primary);
@@ -97,16 +106,6 @@ b {
     overflow: hidden;
 }
 
-/* The popper burst sits behind the headline. */
-.hero__confetti {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    pointer-events: none;
-}
-
 .hero__title {
     position: relative;
     z-index: 1;
@@ -178,6 +177,21 @@ b {
     border-radius: 14px;
     border: 1px solid var(--border);
     box-shadow: var(--shadow-xl);
+}
+
+/* The popper goes off over the first screenshot. It reaches past the edges so
+   pieces can fly clear of the browser, and sits above the screenshot but below
+   the callouts, which stay fully legible. */
+.shot__confetti {
+    position: absolute;
+    left: calc(-1 * var(--bleed));
+    top: calc(-1 * var(--bleed));
+    /* canvas is a replaced element: inset alone leaves it at its intrinsic
+       300x150, so the size has to be stated outright. */
+    width: calc(100% + 2 * var(--bleed));
+    height: calc(100% + 2 * var(--bleed));
+    z-index: 1;
+    pointer-events: none;
 }
 
 /* Zero-size anchor placed on the target inside the screenshot. */
@@ -277,6 +291,11 @@ b {
 /* ---------- Responsive ---------- */
 
 @media (max-width: 560px) {
+    :root {
+        /* no room to spill past the screenshot at this width */
+        --bleed: 0px;
+    }
+
     .shell {
         padding: 0 16px;
     }
