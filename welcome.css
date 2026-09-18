@@ -139,6 +139,12 @@ b {
     color: var(--text-primary);
 }
 
+/* The part of the sentence that says where to use the extension. */
+.accent {
+    color: var(--primary);
+    font-weight: 600;
+}
+
 /* Small inline marker that matches the numbers on the screenshots. */
 .ref {
     display: inline-flex;
