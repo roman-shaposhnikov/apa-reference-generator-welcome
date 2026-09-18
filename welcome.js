@@ -35,10 +35,10 @@
     }
 
     // One popper: a cone of pieces fired from (x, y) towards `angle`.
-    function fire(x, y, angle, count) {
+    function fire(x, y, angle, count, cone) {
         for (var i = 0; i < count; i++) {
-            var spread = rand(-0.42, 0.42);
-            var speed = rand(9, 19);
+            var spread = rand(-cone, cone);
+            var speed = rand(6, 14);
             var direction = angle + spread;
 
             pieces.push({
@@ -58,11 +58,9 @@
 
     function burst() {
         pieces = [];
-        // Two poppers angled inwards and up, like the party popper emoji.
-        fire(width * 0.08, height * 0.95, -Math.PI / 3.1, 70);
-        fire(width * 0.92, height * 0.95, -Math.PI + Math.PI / 3.1, 70);
-        // A softer one straight up the middle to fill the headline area.
-        fire(width * 0.5, height * 1.02, -Math.PI / 2, 50);
+        // A single popper, fired straight up from the middle of the hero, so
+        // the confetti reads as one burst centred on the headline.
+        fire(width * 0.5, height * 1.02, -Math.PI / 2, 170, 0.3);
     }
 
     function draw(now) {
@@ -82,7 +80,7 @@
             p.x += p.vx;
             p.y += p.vy;
             p.wobble += 0.09;
-            p.x += Math.sin(p.wobble) * 0.6;
+            p.x += Math.sin(p.wobble) * 0.4;
             p.angle += p.spin;
 
             ctx.save();
