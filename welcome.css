@@ -149,37 +149,63 @@ b {
     vertical-align: 1px;
 }
 
-.ref--float {
+/* ---------- Red annotations: ringed number + arrow + ringed target ---------- */
+
+/* Big numbered disc: light fill, dark digit, double red ring. */
+.ann__num {
     position: absolute;
-    top: -9px;
-    right: -9px;
-    z-index: 4;
-    box-shadow: 0 0 0 3px var(--surface);
+    right: calc(100% + 62px);
+    top: calc(50% + 10px);
+    transform: translateY(-50%);
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--text-primary);
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1;
+    box-shadow:
+        0 0 0 4px var(--arrow),
+        0 0 0 7px var(--surface),
+        0 0 0 9px var(--arrow);
 }
 
-/* ---------- Red annotation arrows ---------- */
+.ann__num--left {
+    right: auto;
+    left: calc(100% + 62px);
+}
 
-.arrow {
+.ann__arrow {
     position: absolute;
-    top: calc(100% + 2px);
-    left: 50%;
-    transform: translateX(-42%);
-    width: 84px;
-    height: 72px;
-    z-index: 3;
+    right: calc(100% + 2px);
+    top: calc(50% - 14px);
+    z-index: 5;
+    width: 64px;
+    height: 44px;
     overflow: visible;
     pointer-events: none;
     color: var(--arrow);
 }
 
-.arrow__line {
+.ann__arrow--left {
+    right: auto;
+    left: calc(100% + 2px);
+    transform: scaleX(-1);
+}
+
+.ann__line {
     fill: none;
     stroke: currentColor;
-    stroke-width: 3.2;
+    stroke-width: 5;
     stroke-linecap: round;
 }
 
-.arrow__head {
+.ann__head {
     fill: currentColor;
     stroke: none;
 }
@@ -199,7 +225,8 @@ b {
     display: flex;
     align-items: center;
     gap: 14px;
-    padding: 12px 16px;
+    /* Tall enough that the annotation disc fits inside the bar. */
+    padding: 18px 16px;
     background: var(--surface-alt);
     border-bottom: 1px solid var(--border);
 }
@@ -242,10 +269,14 @@ b {
     color: var(--text-secondary);
 }
 
+/* The annotated target is circled with the same double red ring. */
 .mock__icon--target {
-    color: var(--primary);
-    background: var(--primary-bg);
-    box-shadow: 0 0 0 2px var(--arrow);
+    border-radius: 50%;
+    background: var(--surface);
+    box-shadow:
+        0 0 0 3px var(--arrow),
+        0 0 0 5px var(--surface),
+        0 0 0 7px var(--arrow);
 }
 
 .mock__icon--brand {
@@ -283,6 +314,8 @@ b {
     position: relative;
     width: min(340px, 100%);
     margin-left: auto;
+    /* Leaves room to the right of the pin for its annotation. */
+    margin-right: 132px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
@@ -496,11 +529,35 @@ b {
     }
 
     .mock__menu {
-        width: 100%;
+        width: calc(100% - 104px);
+        margin-right: 104px;
     }
 
     .mock__page--backdrop {
         display: none;
+    }
+
+    /* Smaller annotations so they still fit beside the shrunken mockups. */
+    .ann__num {
+        width: 46px;
+        height: 46px;
+        font-size: 23px;
+        right: calc(100% + 50px);
+        box-shadow:
+            0 0 0 3px var(--arrow),
+            0 0 0 5px var(--surface),
+            0 0 0 7px var(--arrow);
+    }
+
+    .ann__num--left {
+        right: auto;
+        left: calc(100% + 50px);
+    }
+
+    .ann__arrow {
+        width: 50px;
+        height: 36px;
+        top: calc(50% - 11px);
     }
 }
 
