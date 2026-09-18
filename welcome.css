@@ -13,7 +13,7 @@
     --text-secondary: light-dark(#526066, #a6b6bd);
     --border: light-dark(#dde3e5, #2a3b44);
     --shadow-xl: 0 24px 48px -12px light-dark(rgba(13, 114, 147, 0.22), rgba(0, 0, 0, 0.6));
-    --shell: 700px;
+    --shell: 888px;
 }
 
 * {
@@ -116,6 +116,8 @@ b {
     letter-spacing: -0.02em;
     text-align: center;
     text-wrap: balance;
+    max-width: 700px;
+    margin: 0 auto;
 }
 
 /* ---------- Steps ---------- */
@@ -157,7 +159,7 @@ b {
 
 .shot {
     position: relative;
-    max-width: 565px;
+    max-width: 840px;
     margin: 0 auto;
     /* Annotations are sized in cqw so they scale with the screenshot. */
     container-type: inline-size;
@@ -185,13 +187,13 @@ b {
     left: 0;
     top: 0;
     transform: translate(-50%, -50%);
-    width: 6.6cqw;
-    height: 6.6cqw;
+    width: 3.4cqw;
+    height: 3.4cqw;
     border-radius: 50%;
     box-shadow:
-        0 0 0 3px var(--arrow),
-        0 0 0 5px var(--surface),
-        0 0 0 7px var(--arrow);
+        0 0 0 0.42cqw var(--arrow),
+        0 0 0 0.72cqw var(--surface),
+        0 0 0 1cqw var(--arrow);
 }
 
 /* Big numbered disc. */
@@ -199,57 +201,58 @@ b {
     position: absolute;
     top: 0;
     transform: translateY(-50%);
-    z-index: 2;
+    z-index: 3;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 12.5cqw;
-    height: 12.5cqw;
+    width: 6.4cqw;
+    height: 6.4cqw;
     border-radius: 50%;
     background: var(--surface);
     color: var(--text-primary);
-    font-size: 6.2cqw;
+    font-size: 3.2cqw;
     font-weight: 700;
     line-height: 1;
     box-shadow:
-        0 0 0 4px var(--arrow),
-        0 0 0 7px var(--surface),
-        0 0 0 9px var(--arrow);
+        0 0 0 0.5cqw var(--arrow),
+        0 0 0 0.85cqw var(--surface),
+        0 0 0 1.1cqw var(--arrow);
 }
 
 .ann__arrow {
     position: absolute;
     z-index: 2;
-    width: 11cqw;
-    height: 7.6cqw;
+    width: 5.6cqw;
+    height: 3.9cqw;
     overflow: visible;
     pointer-events: none;
     color: var(--arrow);
 }
 
 .ann__arrow--long {
-    width: 16cqw;
-    height: 11cqw;
+    width: 7cqw;
+    height: 4.8cqw;
 }
 
 /* Disc on the left, arrow pointing right at the target. */
 .ann--left .ann__num {
-    right: 13.5cqw;
+    right: 7cqw;
 }
 
 .ann--left .ann__arrow {
-    right: 2cqw;
-    top: -2.5cqw;
+    right: 1.6cqw;
+    top: -1.24cqw;
 }
 
-/* Disc on the right, arrow pointing left at the target. */
+/* Disc on the right, arrow pointing left at the target.
+   Placed clear of the dropdown, like the reference callout. */
 .ann--right .ann__num {
-    left: 20cqw;
+    left: 10cqw;
 }
 
 .ann--right .ann__arrow {
-    left: 3cqw;
-    top: -3.6cqw;
+    left: 1.6cqw;
+    top: -1.53cqw;
     transform: scaleX(-1);
 }
 
