@@ -35,7 +35,9 @@
         // canvas is larger by the bleed, which varies with screen width.
         var shot = canvas.parentNode.getBoundingClientRect();
         originX = (shot.left - rect.left) + shot.width * 0.5;
-        originY = (shot.top - rect.top) + shot.height * 0.35;
+        // In the gap between the step's text and the screenshot, so the burst
+        // reads as going off just above the browser.
+        originY = (shot.top - rect.top) - 14;
     }
 
     function rand(min, max) {

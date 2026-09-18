@@ -14,8 +14,11 @@
     --border: light-dark(#dde3e5, #2a3b44);
     --shadow-xl: 0 24px 48px -12px light-dark(rgba(13, 114, 147, 0.22), rgba(0, 0, 0, 0.6));
     --shell: 888px;
-    /* how far the confetti may fly past the screenshot */
-    --bleed: 70px;
+    /* how far the confetti may fly past the screenshot. The sideways reach
+       has to give way on narrow screens; the vertical one never does, because
+       the burst starts just above the screenshot's top edge. */
+    --bleed-x: 70px;
+    --bleed-y: 70px;
 }
 
 * {
@@ -184,12 +187,12 @@ b {
    the callouts, which stay fully legible. */
 .shot__confetti {
     position: absolute;
-    left: calc(-1 * var(--bleed));
-    top: calc(-1 * var(--bleed));
+    left: calc(-1 * var(--bleed-x));
+    top: calc(-1 * var(--bleed-y));
     /* canvas is a replaced element: inset alone leaves it at its intrinsic
        300x150, so the size has to be stated outright. */
-    width: calc(100% + 2 * var(--bleed));
-    height: calc(100% + 2 * var(--bleed));
+    width: calc(100% + 2 * var(--bleed-x));
+    height: calc(100% + 2 * var(--bleed-y));
     z-index: 1;
     pointer-events: none;
 }
@@ -292,8 +295,8 @@ b {
 
 @media (max-width: 560px) {
     :root {
-        /* no room to spill past the screenshot at this width */
-        --bleed: 0px;
+        /* no room to spill sideways at this width */
+        --bleed-x: 0px;
     }
 
     .shell {
